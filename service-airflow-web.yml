@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-airflow
+spec:
+  ports:
+  - port: 8080
+    nodePort: 30002
+    targetPort: airflow-web
+    protocol: TCP
+  selector:
+    airflow: web
+  type: NodePort
