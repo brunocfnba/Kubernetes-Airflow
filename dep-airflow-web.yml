@@ -1,0 +1,41 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: airflow-web
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        airflow: web
+    spec:
+        containers:
+          - name: airflow
+            image: <your registry>/apache-airflow:1.9
+            env:
+            - name: DB_USER
+              value: <your db user>
+            - name: DB_PWD
+              value: <your db password>
+            - name: DB_HOST
+              value: <your db host>
+            - name: DB_PORT
+              value: "<your db port>"
+            - name: DB_NAME
+              value: "<your db name>"
+            - name: IS_WEB
+              value: ["yes"|"no"]
+            - name: DB_TYPE
+              value: [postgres | mysql]
+            ports:
+            - name: airflow-web
+              containerPort: 8080
+            volumeMounts:
+                - mountPath: /home/airflow/vol
+                  name: airflow-dags-vol
+
+        volumes:
+        - name: airflow-dags-vol
+          persistentVolumeClaim:
+              claimName: airflow-pvc
