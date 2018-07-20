@@ -32,7 +32,7 @@ RUN apt-get update && apt-get install -y \
  && service cron stop \
 
  && useradd -ms /bin/bash -d ${AIRFLOW_HOME} airflow \
- && pip install --upgrade pip \
+ && python -m pip install --upgrade pip
  && pip install Cython \
  && pip install pytz==2015.7 \
  && pip install jinja2==2.8.1 \
